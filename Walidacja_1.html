@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Walidacja</title>
+</head>
+<body>
+    <form>
+        <label for="data">Data:</label>
+        <input type="datetime-local" id="data">* <br>
+        <label for="email">Email:</label>
+        <input type="email" id="email">* <br>
+        <label for="name">Imie i nazwisko:</label>
+        <input type="text" id="name">* <br>
+        <label for="ocena">Ocena:</label>
+        <input type="number" id="ocena">* <br>
+            <input type="reset" id="reset">
+            <input type="submit" value="wyslij"id="submit">
+      </form>
+    <script>
+let data = document.getElementById("data")
+let email = document.getElementById("email");
+email.addEventListener("input", () =>{
+    let emailRegex = /[a-z]{2,3}@[a-z]{2,5}.[a-z]{2,3}/g;
+    if(emailRegex.test(email.value)==true)
+    {
+        email.setCustomValidity("")
+    } 
+    else{
+        email.setCustomValidity("Zły email")
+    }
+    if(!email.value.includes("@")){
+        email.setCustomValidity("Dodaj znak '@' w adresie email. W adresie '"+email.value+"' brakuje znaku '@'")
+    }
+    if(email.value.includes("@")&&!email.value.includes(".")){
+        email.setCustomValidity("Dodaj domenę po '@' (.pl/.com.) Adres '"+email.value+"' jest niepełny")
+    }
+})
+let imie = document.getElementById('name');
+imie.addEventListener("input", () =>
+{
+    let imieRegex = /[A-z]{1,10}/g;
+    let imieNRegex = /[A-z]{1,10}\s[A-z]{1,10}/g;
+    if(imieNRegex.test(imie.value)==true){
+        imie.setCustomValidity('')
+    }
+    else if(imieRegex.test(imie.value) == true)
+    {
+        imie.setCustomValidity("podaj imię i nazwisko")
+    }
+})
+let ocena = document.getElementById("ocena")
+ocena.addEventListener("input", () =>{
+    let ocenaRegex = /[0-6]/g;
+    if(ocenaRegex.test(ocena.value)==true)
+    {
+        ocena.setCustomValidity("")
+    }else
+    {
+        ocena.setCustomValidity("Ocena powinna być nie większa niż 6")
+    }
+})
+document.getElementById("submit").addEventListener("click", function submit(){
+    if(imie.value==""){
+        imie.setCustomValidity("wpisz imie i nazwisko")
+    }
+    if(email.value==""){
+        email.setCustomValidity("wpisz email")
+    }
+    if(ocena.value==""){
+        ocena.setCustomValidity("wpisz ocene 1-6")
+    }
+    if(data.value==""){
+        data.setCustomValidity("podaj date z godzina")
+    }else
+    {
+        data.setCustomValidity("")
+    }
+})
+    </script>
+</body>
+</html>
